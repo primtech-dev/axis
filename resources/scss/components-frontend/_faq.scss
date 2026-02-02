@@ -1,0 +1,91 @@
+// ============================================
+// FAQ Section - Frontend Landing Page
+// ============================================
+
+.faq-section {
+    background-color: var(--light-blue);
+    padding: 80px 0;
+
+    @media (max-width: 767.98px) {
+        padding: 60px 0;
+    }
+}
+
+// Accordion Styles
+.accordion {
+    &-item {
+        border: none;
+        margin-bottom: 1rem;
+        border-radius: 10px !important;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &-button {
+        background-color: white;
+        color: var(--dark-blue);
+        font-weight: 600;
+        font-size: 1.05rem;
+        padding: 1.25rem 1.5rem;
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+
+        @media (max-width: 767.98px) {
+            font-size: 1rem;
+            padding: 1rem 1.25rem;
+        }
+
+        // Active/Expanded state
+        &:not(.collapsed) {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 71, 171, 0.3);
+
+            &::after {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            }
+        }
+
+        // Focus state
+        &:focus {
+            box-shadow: none;
+            border: none;
+        }
+
+        // Arrow icon
+        &::after {
+            transition: transform 0.3s ease;
+        }
+
+        &:not(.collapsed)::after {
+            transform: rotate(-180deg);
+        }
+    }
+
+    &-body {
+        padding: 1.5rem;
+        background-color: white;
+        color: #666;
+        line-height: 1.7;
+        font-size: 1rem;
+
+        @media (max-width: 767.98px) {
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    &-collapse {
+        transition: all 0.3s ease;
+    }
+}

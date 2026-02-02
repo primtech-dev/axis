@@ -1,0 +1,70 @@
+// ============================================
+// Frontend Landing Page Styles - Separate from CMS
+// ============================================
+
+// Variables untuk Frontend
+:root {
+    --primary-blue: #0047AB;
+    --secondary-blue: #1E90FF;
+    --light-blue: #E6F2FF;
+    --accent-yellow: #FFD700;
+    --dark-blue: #003380;
+}
+
+// Base Styles khusus untuk landing page
+.landing-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+
+    // Smooth scroll
+    scroll-behavior: smooth;
+
+    // Container override untuk landing
+    .container {
+        max-width: 1200px;
+    }
+}
+
+// Import Frontend Components dengan prefix
+@import 'components-frontend/navbar';
+@import 'components-frontend/hero';
+@import 'components-frontend/simulation';
+@import 'components-frontend/error';
+@import 'components-frontend/faq';
+@import 'components-frontend/testimonial';
+@import 'components-frontend/application';
+@import 'components-frontend/about';
+@import 'components-frontend/products';
+@import 'components-frontend/product-detail';
+@import 'components-frontend/news';
+@import 'components-frontend/news-page';
+@import 'components-frontend/news-detail';
+@import 'components-frontend/news-tag';
+@import 'components-frontend/footer-landing';
+@import 'components-frontend/contact';
+
+// Import Utilities khusus frontend
+@import 'utilities/buttons-frontend';
+@import 'utilities/forms-frontend';
+@import 'utilities/sections-frontend';
+
+// Custom scrollbar untuk landing page saja
+.landing-page {
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-blue);
+        border-radius: 5px;
+
+        &:hover {
+            background: var(--dark-blue);
+        }
+    }
+}

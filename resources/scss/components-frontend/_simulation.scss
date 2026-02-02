@@ -1,0 +1,110 @@
+// ============================================
+// Simulation Form - Frontend Landing Page
+// ============================================
+
+.simulation-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    //margin-top: -50px;
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s ease;
+
+    @media (max-width: 767.98px) {
+        padding: 1.5rem;
+        margin-top: -30px;
+    }
+
+    &:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+    }
+
+    h3 {
+        font-weight: bold;
+        position: relative;
+        padding-bottom: 1rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-yellow);
+            border-radius: 2px;
+        }
+    }
+}
+
+// Result Box
+.result-box {
+    background-color: var(--light-blue);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border: 2px solid var(--secondary-blue);
+    animation: slideDown 0.5s ease;
+
+    h5 {
+        color: var(--primary-blue);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 71, 171, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: rgba(0, 71, 171, 0.03);
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border-radius: 5px;
+        }
+
+        &:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--accent-yellow);
+
+            @media (max-width: 767.98px) {
+                font-size: 1rem;
+            }
+        }
+
+        span {
+            &:first-child {
+                color: var(--dark-blue);
+                font-weight: 500;
+            }
+
+            &:last-child {
+                color: var(--primary-blue);
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

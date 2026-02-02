@@ -1,0 +1,81 @@
+/**
+ * CKEditor 5 Custom Styling
+ */
+
+.ck-editor__editable {
+    min-height: 300px !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+
+    // Custom scrollbar untuk CKEditor
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+
+        &:hover {
+            background: #94a3b8;
+        }
+    }
+}
+
+// CKEditor wrapper
+.ck-editor {
+    // Custom toolbar styling (optional)
+    .ck-toolbar {
+        border-color: #e5e7eb !important;
+        background-color: #f9fafb !important;
+    }
+
+    // Custom content area border
+    .ck-editor__editable {
+        border-color: #e5e7eb !important;
+
+        &:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
+        }
+    }
+}
+
+// Dark mode support (optional)
+[data-bs-theme="dark"] {
+    .ck-editor__editable {
+        &::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #475569;
+
+            &:hover {
+                background: #64748b;
+            }
+        }
+    }
+
+    .ck-editor {
+        .ck-toolbar {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        .ck-editor__editable {
+            background-color: #0f172a !important;
+            color: #e2e8f0 !important;
+            border-color: #334155 !important;
+
+            &:focus {
+                border-color: #3b82f6 !important;
+            }
+        }
+    }
+}

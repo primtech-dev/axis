@@ -1,0 +1,43 @@
+{
+  "hash": "8408d28a",
+  "configHash": "2da4e453",
+  "lockfileHash": "e900fbaf",
+  "browserHash": "af0346fa",
+  "optimized": {
+    "jquery": {
+      "src": "../../node_modules/jquery/dist/jquery.js",
+      "file": "jquery.js",
+      "fileHash": "44695694",
+      "needsInterop": true
+    },
+    "bootstrap/dist/js/bootstrap": {
+      "src": "../../node_modules/bootstrap/dist/js/bootstrap.js",
+      "file": "bootstrap_dist_js_bootstrap.js",
+      "fileHash": "59cb7b15",
+      "needsInterop": true
+    },
+    "lucide": {
+      "src": "../../node_modules/lucide/dist/esm/lucide.js",
+      "file": "lucide.js",
+      "fileHash": "6cde3458",
+      "needsInterop": false
+    },
+    "chart.js/auto": {
+      "src": "../../node_modules/chart.js/auto/auto.js",
+      "file": "chart__js_auto.js",
+      "fileHash": "e27aa25a",
+      "needsInterop": false
+    },
+    "simplebar": {
+      "src": "../../node_modules/simplebar/dist/index.mjs",
+      "file": "simplebar.js",
+      "fileHash": "81a3cd97",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-BYYN2XO5": {
+      "file": "chunk-BYYN2XO5.js"
+    }
+  }
+}

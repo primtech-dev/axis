@@ -1,0 +1,204 @@
+// ============================================
+// Error Page (404) - Frontend
+// ============================================
+
+.error-section {
+    padding: 110px 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 767.98px) {
+        padding: 60px 0;
+    }
+}
+
+// Error Illustration
+.error-illustration {
+    .error-svg {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+
+        @media (max-width: 767.98px) {
+            max-width: 350px;
+        }
+
+        .error-number {
+            font-size: 120px;
+            font-weight: bold;
+            fill: var(--primary-blue);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            @media (max-width: 767.98px) {
+                font-size: 80px;
+            }
+        }
+    }
+}
+
+// Error Title
+.error-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
+
+    @media (max-width: 767.98px) {
+        font-size: 2rem;
+    }
+}
+
+// Error Message
+.error-message {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+
+    @media (max-width: 767.98px) {
+        font-size: 1rem;
+    }
+}
+
+// Error Search
+.error-search {
+    max-width: 500px;
+    margin: 0 auto;
+
+    .search-form-inline {
+        .input-group {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+
+            .form-control {
+                border: none;
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 50px 0 0 50px;
+
+                &:focus {
+                    box-shadow: none;
+                    border-color: transparent;
+                }
+            }
+
+            .btn {
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0 50px 50px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+}
+
+// Error Links (Buttons)
+.error-links {
+    margin-top: 2rem;
+    padding-bottom: 4rem;
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+
+        @media (max-width: 767.98px) {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        svg {
+            vertical-align: middle;
+        }
+
+        &.btn-primary {
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 20px rgba(0, 71, 171, 0.3);
+            }
+        }
+
+        &.btn-outline-primary {
+            &:hover {
+                background-color: var(--primary-blue);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 20px rgba(0, 71, 171, 0.2);
+            }
+        }
+    }
+}
+
+// Error Help Section
+.error-help {
+    p {
+        font-size: 1.1rem;
+        color: var(--dark-blue);
+        font-weight: 600;
+    }
+
+    .help-card {
+        display: block;
+        padding: 2rem 1.5rem;
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 15px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        height: 100%;
+
+        @media (max-width: 767.98px) {
+            padding: 1.5rem 1rem;
+        }
+
+        svg {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        h6 {
+            color: var(--dark-blue);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+
+        &:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(0, 71, 171, 0.15);
+            transform: translateY(-5px);
+
+            svg {
+                color: var(--accent-yellow);
+                transform: scale(1.1);
+            }
+
+            h6 {
+                color: var(--primary-blue);
+            }
+        }
+    }
+}

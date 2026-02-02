@@ -1,0 +1,1 @@
+import{b as s}from"./bootstrap-BTbS0qBz.js";function I(d){const{modalId:m="deleteModal",formId:n="deleteForm",itemNameId:l="delete_item_name",id:a,name:c,route:i}=d,e=document.getElementById(n);e&&(e.action=i.replace(":id",a));const t=document.getElementById(l);t&&(t.textContent=c);const o=document.getElementById(m);o&&new s.Modal(o).show()}export{I as s};
