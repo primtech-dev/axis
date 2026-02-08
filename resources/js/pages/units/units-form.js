@@ -1,35 +1,36 @@
 import $ from 'jquery';
 
-function toastError(msg) {
-    if (window.toast && typeof window.toast.error === 'function') {
-        window.toast.error(msg);
-    } else {
-        console.warn('Toast not available:', msg);
-    }
-}
-
 $(function () {
-    const $name = $('#name');
-    const $form = $('#unitForm');
 
-    $form.on('submit', function (e) {
-        const nameVal = $name.val().trim();
+    const form = document.getElementById('unitForm');
+    if (!form) return;
 
-        if (!nameVal) {
+    const $name = $('input[name="name"]');
+
+    function toastError(msg) {
+        if (window.toast?.error) {
+            window.toast.error(msg);
+        } else {
+            alert(msg);
+        }
+    }
+
+    $('#unitForm').on('submit', function (e) {
+
+        if (!$name.val().trim()) {
             e.preventDefault();
-            toastError('Nama unit harus diisi.');
+            toastError('Nama unit wajib diisi.');
             $name.focus();
-            return false;
+            return;
         }
 
         const $btn = $(this).find('button[type="submit"]').first();
-        $btn.prop('disabled', true);
-        $btn.data('orig-html', $btn.html());
-        $btn.html(`<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Menyimpan...`);
-        return true;
+        $btn.prop('disabled', true).html(
+            `<span class="spinner-border spinner-border-sm me-1"></span> Menyimpan...`
+        );
     });
 
-    if (typeof window.serverValidationErrors !== 'undefined' && Array.isArray(window.serverValidationErrors)) {
-        window.serverValidationErrors.forEach(err => toastError(err));
+    if (Array.isArray(window.serverValidationErrors)) {
+        window.serverValidationErrors.forEach(msg => toastError(msg));
     }
 });

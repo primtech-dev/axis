@@ -10,31 +10,36 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'sku','name','short_description','description','attributes','weight_gram','is_active', 'unit_id'
+        'sku',
+        'name',
+        'category_id',
+        'unit_id',
+        'price_buy_default',
+        'price_sell_default',
+        'is_active',
     ];
 
     protected $casts = [
-        'attributes' => 'array',
-        'is_active' => 'boolean',
+        'price_buy_default'  => 'decimal:2',
+        'price_sell_default' => 'decimal:2',
+        'is_active'          => 'boolean',
     ];
 
-    public function variants()
+    /* =========================
+     * RELATIONS
+     * ========================= */
+    public function category()
     {
-        return $this->hasMany(ProductVariant::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'product_categories')->withTimestamps()->using(\App\Models\ProductCategory::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class, 'unit_id');
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function purchaseItems()
+    {
+        return $this->hasMany(PurchaseItem::class);
     }
 }

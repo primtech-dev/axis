@@ -1,84 +1,192 @@
-@extends('layouts.vertical', ['title' => 'Detail Pelanggan'])
+@extends('layouts.vertical', ['title' => 'Detail Customer'])
 
 @section('content')
     @include('layouts.shared.page-title', [
-        'title' => 'Detail Pelanggan',
-        'subTitle' => 'Detail dan alamat pelanggan',
-        'breadcrumbs' => [
-            ['name' => 'Pelanggan', 'url' => route('customers.index')],
-            ['name' => 'Detail']
-        ]
+        'title' => 'Detail Customer',
+        'subTitle' => 'Informasi customer dan piutang penjualan',
     ])
 
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card mb-3">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Informasi Pelanggan</h5>
-                    @can('customers.activate')
-                        <button id="btnToggleActive" class="btn btn-sm {{ $customer->is_active ? 'btn-outline-danger' : 'btn-outline-success' }}">
-                            {{ $customer->is_active ? 'Non-aktifkan' : 'Aktifkan' }}
-                        </button>
-                    @endcan
+    {{-- HEADER CUSTOMER --}}
+    <div class="card mb-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-1">{{ $customer->name }}</h4>
+                <div class="text-muted">
+                    {{ $customer->phone ?? '-' }}
+                    @if ($customer->email)
+                        · {{ $customer->email }}
+                    @endif
                 </div>
+            </div>
+
+            <span class="badge {{ $customer->is_active ? 'bg-success' : 'bg-secondary' }}">
+                {{ $customer->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+
+        <div class="col-md-4">
+            <div class="card border-danger">
                 <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">Nama</dt>
-                        <dd class="col-sm-8">{{ e($customer->full_name) }}</dd>
-
-                        <dt class="col-sm-4">Email</dt>
-                        <dd class="col-sm-8">{{ e($customer->email) }}</dd>
-
-                        <dt class="col-sm-4">Telepon</dt>
-                        <dd class="col-sm-8">{{ $customer->phone ?? '-' }}</dd>
-
-                        <dt class="col-sm-4">Status</dt>
-                        <dd class="col-sm-8" id="customerStatusText">{{ $customer->is_active ? 'Aktif' : 'Non-aktif' }}</dd>
-
-                        <dt class="col-sm-4">Terdaftar</dt>
-                        <dd class="col-sm-8">{{ $customer->created_at ? $customer->created_at->format('d M Y H:i') : '-' }}</dd>
-
-                        <dt class="col-sm-4">Meta</dt>
-                        <dd class="col-sm-8"><pre style="white-space:pre-wrap">{{ json_encode($customer->meta ?? [], JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE) }}</pre></dd>
-                    </dl>
+                    <div class="text-muted">Total Piutang</div>
+                    <h4 class="text-danger mb-0">
+                        {{ number_format($customer->receivables->sum('total'), 2, ',', '.') }}
+                    </h4>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Alamat</h5>
-                </div>
+        <div class="col-md-4">
+            <div class="card border-success">
                 <div class="card-body">
-                    @if($customer->addresses->isEmpty())
-                        <div class="text-muted">Belum ada alamat.</div>
-                    @else
-                        <div class="list-group">
-                            @foreach($customer->addresses as $addr)
-                                <div class="list-group-item">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">{{ e($addr->label) }} @if($addr->is_default) <span class="badge bg-success">Default</span> @endif</h6>
-                                        <small class="text-muted">{{ $addr->created_at ? $addr->created_at->format('d M Y') : '' }}</small>
-                                    </div>
-                                    <p class="mb-1">{{ e($addr->street) }}, {{ e($addr->city) }}, {{ e($addr->province) }} {{ $addr->postal_code ? e($addr->postal_code) : '' }}</p>
-                                    <small class="text-muted">Phone: {{ $addr->phone ?? '-' }} — Country: {{ $addr->country }}</small>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+                    <div class="text-muted">Total Terbayar</div>
+                    <h4 class="text-success mb-0">
+                        {{ number_format($customer->receivables->sum('paid'), 2, ',', '.') }}
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <div class="text-muted">Sisa Piutang</div>
+                    <h4 class="text-warning mb-0">
+                        {{ number_format($totalPiutang, 2, ',', '.') }}
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h6 class="mb-0">Aging Piutang</h6>
+        </div>
+
+        <div class="card-body row g-3">
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <div class="text-muted">0 – 30 Hari</div>
+                    <h5 class="mb-0 text-success">
+                        {{ number_format($aging['0_30'], 2, ',', '.') }}
+                    </h5>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <div class="text-muted">31 – 60 Hari</div>
+                    <h5 class="mb-0 text-warning">
+                        {{ number_format($aging['31_60'], 2, ',', '.') }}
+                    </h5>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 border rounded">
+                    <div class="text-muted">&gt; 60 Hari</div>
+                    <h5 class="mb-0 text-danger">
+                        {{ number_format($aging['60_up'], 2, ',', '.') }}
+                    </h5>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="{{ route('customers.index') }}" class="btn btn-secondary mt-3"><i class="ti ti-arrow-left"></i> Kembali</a>
-@endsection
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">Detail Piutang Penjualan</h6>
+            <span class="text-muted small">
+                {{ $customer->receivables->count() }} transaksi
+            </span>
+        </div>
 
-@section('scripts')
-    <script>
-        window.customerToggleRoute = '{{ route('customers.toggleActive', $customer->id) }}';
-        window.customerId = '{{ $customer->id }}';
-    </script>
-    @vite(['resources/js/pages/customers/show.js'])
+        <div class="card-body table-responsive">
+
+            @if ($customer->receivables->count() === 0)
+                <div class="text-muted">
+                    Belum ada transaksi penjualan.
+                </div>
+            @else
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Tanggal</th>
+                            <th>Jatuh Tempo</th> {{-- 🔥 TAMBAHAN --}}
+                            <th class="text-end">Total</th>
+                            <th class="text-end">Terbayar</th>
+                            <th class="text-end">Sisa</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($customer->receivables as $receivable)
+                            <tr>
+
+                                <td class="fw-semibold">
+                                    {{ $receivable->sale->invoice_number }}
+                                </td>
+
+                                <td>
+                                    {{ $receivable->sale->date->format('Y-m-d') }}
+                                </td>
+
+                                <td>
+                                    {{ $receivable->sale->due_date ? $receivable->sale->due_date->format('Y-m-d') : '-' }}
+                                </td>
+
+                                <td class="text-end">
+                                    {{ number_format($receivable->total, 2, ',', '.') }}
+                                </td>
+
+                                <td class="text-end text-success">
+                                    {{ number_format($receivable->paid, 2, ',', '.') }}
+                                </td>
+
+                                <td class="text-end {{ $receivable->balance > 0 ? 'text-danger' : 'text-muted' }}">
+                                    {{ number_format($receivable->balance, 2, ',', '.') }}
+                                </td>
+
+                                <td class="text-center">
+                                    <span class="badge {{ $receivable->balance > 0 ? 'bg-warning' : 'bg-success' }}">
+                                        {{ $receivable->balance > 0 ? 'Belum Lunas' : 'Lunas' }}
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="{{ route('sales.show', $receivable->sale->id) }}"
+                                        class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip"
+                                        title="Lihat Penjualan">
+                                        <i class="ti ti-eye"></i>
+                                    </a>
+
+                                    @if ($receivable->balance > 0)
+                                        <a href="{{ route('sales.pay.create', $receivable->sale->id) }}"
+                                            class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip"
+                                            title="Bayar Piutang">
+                                            <i class="ti ti-cash"></i>
+                                        </a>
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+
+        </div>
+
+        <div class="card-footer d-flex gap-2">
+            <a href="{{ route('customers.index') }}" class="btn btn-outline-secondary">
+                <i data-lucide="arrow-left"></i> Kembali
+            </a>
+        </div>
+    </div>
 @endsection

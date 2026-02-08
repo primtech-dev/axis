@@ -1,0 +1,108 @@
+/* RESET POS */
+.pos-root {
+    display: flex;
+    height: calc(100vh - 90px);
+    background: #f9fafb;
+}
+
+/* LEFT */
+.pos-main {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+/* CATEGORY */
+.pos-categories {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+}
+
+.pos-category-btn {
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+/* PRODUCTS */
+.pos-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+.pos-product {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.pos-product-img {
+    height: 100px;
+    background: #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.pos-product-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.pos-product-price {
+    font-size: 13px;
+    color: #555;
+}
+
+/* RIGHT CART */
+.pos-cart {
+    width: 360px;
+    background: white;
+    border-left: 1px solid #ddd;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pos-cart-header {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.pos-cart-items {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.pos-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+}
+
+/* PAYMENT */
+.pos-payments {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.pos-payment-btn.active {
+    background: #4f46e5;
+    color: white;
+}
+
+/* SUBMIT */
+.pos-submit {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+}

@@ -15,7 +15,8 @@ window.btnDeleteUnit = function (id, title) {
     });
 };
 
-$(function() {
+$(function () {
+
     if (!window.unitRoutes || !window.unitRoutes.index) {
         console.error('unitRoutes.index not defined.');
         return;
@@ -26,34 +27,75 @@ $(function() {
         serverSide: true,
         responsive: true,
         autoWidth: false,
+
         ajax: {
             url: window.unitRoutes.index,
             type: 'GET',
             dataType: 'json',
             cache: false,
-            error: function(xhr, textStatus, errorThrown) {
-                console.error('DataTables AJAX error:', textStatus, errorThrown, xhr.responseText);
-                if (window.toast) window.toast.error('Gagal memuat data unit. Cek console.');
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error(
+                    'DataTables AJAX error:',
+                    textStatus,
+                    errorThrown,
+                    xhr.responseText
+                );
+                if (window.toast) {
+                    window.toast.error('Gagal memuat data unit.');
+                }
             }
         },
+
         columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'code', name: 'code' },
-            { data: 'name', name: 'name' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center' }
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                width: '5%'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'created_at',
+                name: 'created_at',
+                width: '20%'
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                className: 'text-center',
+                width: '12%'
+            }
         ],
-        order: [[3, 'desc']],
-        drawCallback: function() {
-            try { if (window.lucide && typeof window.lucide.replace === 'function') window.lucide.replace(); } catch(e) {}
+
+        order: [[2, 'desc']], // created_at DESC
+
+        drawCallback: function () {
+            try {
+                if (window.lucide && typeof window.lucide.replace === 'function') {
+                    window.lucide.replace();
+                }
+            } catch (e) {}
+
             initTooltips(document.querySelector('#units-table'));
         }
     });
 
-    $(document).on('click', '.js-delete-unit', function(e) {
+    $(document).on('click', '.js-delete-unit', function (e) {
         e.preventDefault();
+
         const id = $(this).data('id');
         const name = $(this).data('name') || '';
+
         showDeleteModal({
             modalId: 'deleteUnitModal',
             formId: 'deleteUnitForm',
@@ -64,6 +106,12 @@ $(function() {
         });
     });
 
-    try { if (window.lucide && typeof window.lucide.replace === 'function') window.lucide.replace(); } catch(e) {}
+    // initial render
+    try {
+        if (window.lucide && typeof window.lucide.replace === 'function') {
+            window.lucide.replace();
+        }
+    } catch (e) {}
+
     initTooltips(document);
 });

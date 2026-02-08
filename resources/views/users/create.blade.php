@@ -1,8 +1,19 @@
 @extends('layouts.vertical', ['title' => 'Tambah User'])
 
 @section('styles')
+{{--    @vite(['node_modules/select2/dist/css/select2.min.css'])--}}
     <style>
         .card-help { background:#fbfbfc; border:1px solid #eef2f6; }
+        .select2-container--default .select2-selection--single {
+            height: 38px;
+            padding: 5px 10px;
+        }
+        .select2-selection__rendered {
+            line-height: 26px !important;
+        }
+        .select2-selection__arrow {
+            height: 36px !important;
+        }
     </style>
 @endsection
 
@@ -21,98 +32,109 @@
         @csrf
 
         <div class="row">
+            {{-- LEFT --}}
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header"><h5 class="card-title mb-0">Detail User</h5></div>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Detail User</h5>
+                    </div>
                     <div class="card-body">
+
                         <div class="mb-3">
                             <label class="form-label">Nama <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                            <input type="text"
+                                   name="name"
+                                   class="form-control"
+                                   value="{{ old('name') }}"
+                                   required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Email <span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control"
+                                   value="{{ old('email') }}"
+                                   required>
                         </div>
 
                         <div class="row g-2">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Password <span class="text-danger">*</span></label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password"
+                                       name="password"
+                                       class="form-control"
+                                       required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Konfirmasi Password <span class="text-danger">*</span></label>
-                                <input type="password" name="password_confirmation" class="form-control" required>
+                                <input type="password"
+                                       name="password_confirmation"
+                                       class="form-control"
+                                       required>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Branch</label>
-                            <select name="branch_id" class="form-select">
-                                <option value="">— Tidak ada —</option>
-                                @foreach($branches as $b)
-                                    <option value="{{ $b->id }}" {{ old('branch_id') == $b->id ? 'selected' : '' }}>{{ $b->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Roles</label>
-                            <select name="roles[]" class="form-select" multiple>
+                            <label class="form-label">Role <span class="text-danger">*</span></label>
+                            <select
+                                id="roleSelect"
+                                name="roles[]"
+                                class="form-select"
+                                required
+                            >
+                                <option value="">— Pilih Role —</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->name }}" {{ (is_array(old('roles')) && in_array($role->name, old('roles'))) ? 'selected' : '' }}>
-                                        {{ $role->name }}
+                                    <option value="{{ $role->name }}"
+                                        {{ old('roles.0') === $role->name ? 'selected' : '' }}>
+                                        {{ ucfirst($role->name) }}
                                     </option>
                                 @endforeach
                             </select>
-                            <small class="text-muted">Pilih role untuk assign (boleh lebih dari satu).</small>
-                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Telepon</label>
-                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Alamat</label>
-                            <textarea name="address" rows="3" class="form-control">{{ old('address') }}</textarea>
+                            <small class="text-muted">
+                                Setiap user hanya memiliki satu role utama.
+                            </small>
                         </div>
 
                     </div>
                 </div>
             </div>
 
+            {{-- RIGHT --}}
             <div class="col-lg-4">
+
                 <div class="card mb-3 card-help">
-                    <div class="card-header"><h5 class="card-title mb-0">Pengaturan</h5></div>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Pengaturan</h5>
+                    </div>
                     <div class="card-body">
+
                         <div class="mb-3 form-check">
                             <input type="hidden" name="is_active" value="0">
-                            <input id="isActive" type="checkbox" name="is_active" value="1" class="form-check-input" {{ old('is_active', true) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="isActive">Aktif</label>
+                            <input id="isActive"
+                                   type="checkbox"
+                                   name="is_active"
+                                   value="1"
+                                   class="form-check-input"
+                                {{ old('is_active', true) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="isActive">
+                                Aktif
+                            </label>
                         </div>
 
-                        @can('users.update')
-                            <div class="mb-3 form-check">
-                                <input type="hidden" name="is_superadmin" value="0">
-                                <input id="isSuperadmin" type="checkbox" name="is_superadmin" value="1" class="form-check-input" {{ old('is_superadmin') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="isSuperadmin">Superadmin</label>
-                            </div>
-                        @endcan
-
-                        <div class="mb-3">
-                            <label class="form-label">Tanggal dibuat</label>
-                            <input type="text" class="form-control" value="{{ now()->format('d M Y H:i') }}" disabled>
-                        </div>
                     </div>
                 </div>
 
                 <div class="card mb-3">
-                    <div class="card-header"><h5 class="card-title mb-0">Tips</h5></div>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Tips</h5>
+                    </div>
                     <div class="card-body small text-muted">
-                        <ul>
+                        <ul class="mb-0">
                             <li>Gunakan email unik untuk login.</li>
-                            <li>Berikan role minimal yang dibutuhkan (principle of least privilege).</li>
+                            <li>Berikan role seminimal mungkin sesuai tugas.</li>
+                            <li>Superadmin sebaiknya sangat dibatasi.</li>
                         </ul>
                     </div>
                 </div>

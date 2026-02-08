@@ -7,9 +7,9 @@
 @section('content')
     @include('layouts.shared.page-title', [
         'title' => 'Manajemen Unit',
-        'subTitle' => 'Kelola unit produk (satuan)',
+        'subTitle' => 'Kelola satuan produk',
         'breadcrumbs' => [
-            ['name' => 'Pengaturan', 'url' => '#'],
+            ['name' => 'Master Data', 'url' => '#'],
             ['name' => 'Unit']
         ]
     ])
@@ -25,20 +25,21 @@
                         </a>
                     @endcan
                 </div>
+
                 <div class="card-body">
                     <table class="table table-striped dt-responsive align-middle w-100" id="units-table">
                         <thead class="thead-sm text-uppercase fs-xxs">
                         <tr>
                             <th width="5%">No</th>
-                            <th>Kode</th>
                             <th>Nama</th>
-                            <th width="18%">Created At</th>
+                            <th width="20%">Created At</th>
                             <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>

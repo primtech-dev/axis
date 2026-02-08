@@ -59,9 +59,7 @@ $(function() {
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
-            { data: 'branch', name: 'branch', orderable: false, searchable: false },
             { data: 'roles', name: 'roles', orderable: false, searchable: false },
-            { data: 'is_superadmin', name: 'is_superadmin', orderable: false, searchable: false, className: 'text-center' },
             { data: 'is_active', name: 'is_active', orderable: false, searchable: false, className: 'text-center' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center' }

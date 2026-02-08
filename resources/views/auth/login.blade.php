@@ -9,10 +9,10 @@
                         <div class="card-body">
                             <div class="auth-brand mb-4">
                                 <a class="logo-dark" href="/">
-                                    <img src="{{asset('images/logo.png')}}" alt="" height="30">
+                                    <img src="{{asset('images/logo.png')}}" alt="" height="70">
                                 </a>
                                 <a class="logo-light" href="/">
-                                <img src="{{asset('images/logo.png')}}" alt="" height="30">
+                                <img src="{{asset('images/logo.png')}}" alt="" height="7">
                                 </a>
                                 <p class="text-muted w-lg-75 mt-3">Let’s get you signed in. Enter your email and password to
                                     continue.</p>

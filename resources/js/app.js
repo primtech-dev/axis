@@ -12,6 +12,11 @@ import $ from "jquery";
 window.$ = $;
 window.jQuery = $;
 
+import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.css';
+
+window.TomSelect = TomSelect;
+
 import bootstrap from "bootstrap/dist/js/bootstrap";
 
 window.bootstrap = bootstrap;
@@ -465,7 +470,7 @@ class App {
     // Title Text Animation
     initTitleTextAnimation() {
         const originalTitle = document.title;
-        const fullTitle = originalTitle + " — Kencana Store — ";
+        const fullTitle = originalTitle + " — POS Axis  — ";
         let scrollIndex = 0;
         let animationId;
 

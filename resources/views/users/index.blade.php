@@ -33,9 +33,7 @@
                             <th width="5%">No</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Branch</th>
                             <th>Roles</th>
-                            <th width="10%">Superadmin</th>
                             <th width="10%">Status</th>
                             <th width="12%">Dibuat</th>
                             <th width="12%" class="text-center">Aksi</th>

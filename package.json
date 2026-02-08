@@ -60,10 +60,12 @@
         "prismjs": "^1.29.0",
         "quill": "^2.0.3",
         "quill-better-table": "^1.2.10",
+        "select2": "^4.1.0-rc.0",
         "simplebar": "^6.3.0",
         "sortablejs": "^1.15.6",
         "spinkit": "^2.0.1",
         "sweetalert2": "^11.15.10",
+        "tom-select": "^2.4.5",
         "typeahead.js": "^0.11.1",
         "web-animations-js": "^2.3.2",
         "wnumb": "^1.2.0"

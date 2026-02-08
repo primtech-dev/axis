@@ -9,7 +9,7 @@
         'title' => 'Manajemen Kategori',
         'subTitle' => 'Kelola kategori produk',
         'breadcrumbs' => [
-            ['name' => 'Pengaturan', 'url' => '#'],
+            ['name' => 'Master Data', 'url' => '#'],
             ['name' => 'Kategori']
         ]
     ])
@@ -25,24 +25,21 @@
                         </a>
                     @endcan
                 </div>
+
                 <div class="card-body">
                     <table class="table table-striped dt-responsive align-middle w-100" id="categories-table">
                         <thead class="thead-sm text-uppercase fs-xxs">
                         <tr>
                             <th width="5%">No</th>
                             <th>Nama</th>
-                            <th width="8%">Thumbnail</th>
-                            <th>Slug</th>
-                            <th>Parent</th>
-                            <th width="8%">Posisi</th>
-                            <th width="10%">Status</th>
-                            <th width="12%">Created At</th>
+                            <th width="20%">Created At</th>
                             <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>

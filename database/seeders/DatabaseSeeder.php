@@ -11,36 +11,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // ==== Permissions & Roles ====
         $this->call([
             PermissionSeeder::class,
             RoleSeeder::class,
-            RolePermissionSeeder::class,
-            RolePermissionSyncSeeder::class,
-        ]);
-
-        // ==== Permission Modules ====
-        $this->call([
-            BranchesPermissionSeeder::class,
-            CategoryPermissionSeeder::class,
-            CustomerPermissionSeeder::class,
-            OrdersPermissionSeeder::class,
-            PaymentMethodSeeder::class,
-            PermissionProductSeeder::class,
-            StockPermissionSeeder::class,
-            UnitPermissionSeeder::class,
-        ]);
-
-        // ==== Master Data ====
-        $this->call([
-            UserSeeder::class,
-            CustomerSeeder::class,
-        ]);
-
-        // ==== Dummy Orders (opsional) ====
-        $this->call([
-            OrderDummySeeder::class,
-            OrderDummySeeder2::class,
+            UserSeeder::class, // superadmin user
+            PaymentMethodPermissionSeeder::class,
+            SupplierPaymentPermissionSeeder::class,
+            ReportsPermissionSeeder::class,
+            AccountsPermissionSeeder::class,
+            JournalAndProfitLossPermissionSeeder::class,
+            AccountsTableSeeder::class,
+            CustomerPaymentPermissionSeeder::class,
+            JournalPermissionSeeder::class,
+            ExpensePermissionSeeder::class,
+            ProfitLossPermissionSeeder::class,
         ]);
     }
 }

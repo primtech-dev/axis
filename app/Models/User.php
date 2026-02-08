@@ -15,19 +15,8 @@ class User extends Authenticatable
     use HasRoles, HasFactory, Notifiable;
 
     protected $fillable = [
-        'name','email','password','phone','address','branch_id','is_superadmin','is_active','meta'
+        'name','email','password', 'is_active'
     ];
-
-    public function branch()
-    {
-        return $this->belongsTo(\App\Models\Branch::class);
-    }
-
-    public function isSuperAdmin(): bool
-    {
-        return (bool)$this->is_superadmin || $this->hasRole('superadmin');
-    }
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -44,18 +33,8 @@ class User extends Authenticatable
      * @return array<string, string>
      */
     protected $casts = [
-        'is_superadmin' => 'boolean',
-        'is_active' => 'boolean',
-        'meta' => 'array',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'is_active' => 'boolean'
     ];
-
-    // helper check: apakah user boleh akses resource cabang $branchId
-    public function canAccessBranch(?int $branchId): bool
-    {
-        if ($this->isSuperadmin()) return true;
-        if (is_null($branchId)) return false;
-        return $this->branch_id === $branchId;
-    }
 }

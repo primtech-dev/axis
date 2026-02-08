@@ -6,24 +6,23 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create super admin user
-        $superAdmin = User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => 'superadmin@mail.com'],
             [
-                'name' => 'Admin',
+                'name' => 'Super Admin',
                 'password' => Hash::make('password'),
             ]
         );
 
         $role = Role::firstOrCreate(['name' => 'superadmin']);
-        $superAdmin->syncRoles([$role->name]);
+        $user->syncRoles([$role]);
 
-        // \Spatie\Permission\PermissionRegistrar::forgetCachedPermissions();
-        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }
