@@ -1,0 +1,1 @@
+import{T as t}from"./tom-select.complete-IxveCKeG.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector("#customerSelect");e&&new t(e,{dropdownParent:"body",placeholder:"Cari customer...",allowEmptyOption:!0})});

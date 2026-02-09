@@ -1,8 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Tambah Pembelian'])
 
-@section('styles')
+{{-- @section('styles')
     @vite(['node_modules/tom-select/dist/css/tom-select.bootstrap5.min.css'])
-@endsection
+@endsection --}}
 
 @section('content')
     @include('layouts.shared.page-title', [
@@ -141,7 +141,7 @@
 @endsection
 
 @section('scripts')
-    @vite(['node_modules/tom-select/dist/js/tom-select.complete.min.js', 'resources/js/pages/purchases/purchase-form.js'])
+    @vite(['resources/js/pages/purchases/purchase-form.js'])
 
     <script>
         window.products = @json($products);

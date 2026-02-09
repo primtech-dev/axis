@@ -13,9 +13,20 @@ window.$ = $;
 window.jQuery = $;
 
 import TomSelect from 'tom-select';
-import 'tom-select/dist/css/tom-select.css';
+// import 'tom-select/dist/css/tom-select.css';
 
 window.TomSelect = TomSelect;
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-tom-select').forEach(el => {
+        if (!el.tomselect) {
+            new TomSelect(el, {
+                create: false,
+                allowEmptyOption: true,
+            });
+        }
+    });
+});
 
 import bootstrap from "bootstrap/dist/js/bootstrap";
 
@@ -1257,4 +1268,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
     new LayoutCustomizer().init();
     new Plugins().init();
     new I18nManager().init();
+});
+
+window.initTomSelect = function (root = document) {
+    if (typeof TomSelect === 'undefined') {
+        console.error('TomSelect NOT loaded');
+        return;
+    }
+
+    root.querySelectorAll('select.js-tom-select').forEach(el => {
+        if (!el.tomselect) {
+            new TomSelect(el, {
+                create: false,
+                allowEmptyOption: true,
+            });
+        }
+    });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.initTomSelect();
 });

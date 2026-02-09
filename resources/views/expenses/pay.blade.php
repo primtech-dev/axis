@@ -45,7 +45,7 @@
 
                 <div class="col-md-4">
                     <label class="form-label">Sumber Dana <span class="text-danger">*</span></label>
-                    <select name="cash_account_id" class="form-select" required>
+                    <select name="cash_account_id" class="form-select js-tom-select" required>
                         <option value="">— Pilih Akun —</option>
                         @foreach ($cashAccounts as $acc)
                             <option value="{{ $acc->id }}">

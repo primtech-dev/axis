@@ -1,8 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Laba Rugi per Penjualan'])
 
-@section('styles')
-    @vite(['node_modules/tom-select/dist/css/tom-select.bootstrap5.min.css'])
-@endsection
+{{-- @section('styles')
+    @vite(['node_modules//dist/css/tom-select.bootstrap5.min.css'])
+@endsection --}}
 
 @section('content')
 

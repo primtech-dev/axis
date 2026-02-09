@@ -1,8 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Tambah Biaya'])
 
-@section('styles')
+{{-- @section('styles')
     @vite(['node_modules/tom-select/dist/css/tom-select.bootstrap5.css'])
-@endsection
+@endsection --}}
 
 @section('content')
     @include('layouts.shared.page-title', [
