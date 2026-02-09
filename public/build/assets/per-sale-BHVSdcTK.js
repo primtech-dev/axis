@@ -1,1 +1,0 @@
-import{T as o}from"./tom-select.complete-IxveCKeG.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector("#saleSelect");e&&new o(e,{dropdownParent:"body",placeholder:"Cari nomor penjualan...",allowEmptyOption:!0})});

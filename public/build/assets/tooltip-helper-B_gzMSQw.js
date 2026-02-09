@@ -1,1 +1,0 @@
-import{b as e}from"./bootstrap-BTbS0qBz.js";function i(){return document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(t=>{const o=e.Tooltip.getInstance(t);o&&o.dispose()}),[...document.querySelectorAll('[data-bs-toggle="tooltip"]')].map(t=>new e.Tooltip(t,{trigger:"hover"}))}document.addEventListener("DOMContentLoaded",function(){i()});export{i};

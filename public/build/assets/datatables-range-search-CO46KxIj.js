@@ -1,6 +1,0 @@
-document.addEventListener("DOMContentLoaded",function(){const a=document.getElementById("range-search-data");if(a){const i=new DataTable(a,{dom:"<'d-md-flex justify-content-between align-items-center my-2'<'filter-range me-2'>f>rt<'d-md-flex justify-content-between align-items-center mt-2'ip>",language:{paginate:{first:'<i class="ti ti-chevrons-left"></i>',previous:'<i class="ti ti-chevron-left"></i>',next:'<i class="ti ti-chevron-right"></i>',last:'<i class="ti ti-chevrons-right"></i>'}}}),r=document.querySelector(".filter-range");if(r){r.innerHTML=`
-            <div class="d-flex align-items-center gap-2 my-2">
-                <label class="fw-semibold">Price: </label>
-                <input type="text" class="form-control form-control-sm" placeholder="Min" id="min">
-                <input type="text" class="form-control form-control-sm" placeholder="Max" id="max">
-            </div>`;const s=document.getElementById("min"),l=document.getElementById("max");i.search.fixed("range",function(m,c){const e=parseFloat(s.value)||NaN,t=parseFloat(l.value)||NaN,o=(c[2]||"").replace(/[^0-9.]/g,""),n=parseFloat(o)||0;return isNaN(e)&&isNaN(t)||isNaN(e)&&n<=t||e<=n&&isNaN(t)||e<=n&&n<=t}),s.addEventListener("input",()=>i.draw()),l.addEventListener("input",()=>i.draw())}}});

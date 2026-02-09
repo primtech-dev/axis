@@ -1,1 +1,0 @@
-import{T as t}from"./tom-select.complete-IxveCKeG.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector("#cashAccountSelect");e&&new t(e,{dropdownParent:"body",placeholder:"Pilih sumber dana...",allowEmptyOption:!0})});
