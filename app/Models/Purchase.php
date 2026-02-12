@@ -40,7 +40,8 @@ class Purchase extends Model
 
     public function payable()
     {
-        return $this->hasOne(SupplierPayable::class);
+        return $this->hasOne(SupplierPayable::class, 'reference_id', 'id')
+            ->where('reference_type', 'PURCHASE');
     }
 
     public function payments()

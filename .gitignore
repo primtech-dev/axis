@@ -30,3 +30,5 @@ auth.json
 .idea/cashajamtf.iml
 
 /public/build
+
+/.well-known/
