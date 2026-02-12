@@ -4,20 +4,92 @@
     <meta charset="UTF-8">
     <title>Bukti Pembayaran Hutang Biaya</title>
     <style>
-        body { font-family: Arial, sans-serif; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        td { padding: 4px; vertical-align: top; }
-        .border td { border: 1px solid #000; }
-        .text-right { text-align: right; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .kop {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 90px;
+        }
+
+        .company-info {
+            margin-left: 15px;
+        }
+
+        .company-info h3 {
+            margin: 0;
+        }
+
+        hr {
+            margin: 10px 0 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        td, th {
+            padding: 6px;
+            border: 1px solid #000;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .no-border td {
+            border: none !important;
+            padding: 4px 0;
+        }
+
+        .signature {
+            width: 30%;
+            text-align: center;
+            margin-top: 60px;
+        }
     </style>
 </head>
 <body onload="window.print()">
 
-<h3>BUKTI PEMBAYARAN HUTANG BIAYA</h3>
+@php
+    function formatRupiah($value) {
+        return 'Rp ' . number_format($value, 2, ',', '.');
+    }
+@endphp
 
-<table>
+{{-- KOP SURAT --}}
+<div class="kop">
+    <img src="{{ asset('images/logo-pt.png') }}" class="logo">
+
+    <div class="company-info">
+        <h3>PT PANCA PRIMA BAHARI</h3>
+        <div>Nganjuk, Jawa Timur</div>
+        <div>Telp: 08xxxxx</div>
+    </div>
+</div>
+
+<hr>
+
+<h3 style="margin-bottom:5px;">BUKTI PEMBAYARAN HUTANG BIAYA</h3>
+
+{{-- INFO HEADER --}}
+<table class="no-border">
     <tr>
-        <td width="140">No Biaya</td>
+        <td width="150">No Biaya</td>
         <td>: {{ $expense->expense_number }}</td>
     </tr>
     <tr>
@@ -26,7 +98,7 @@
     </tr>
     <tr>
         <td>Tanggal Bayar</td>
-        <td>: {{ \Carbon\Carbon::parse($payment->date)->format('Y-m-d') }}</td>
+        <td>: {{ \Carbon\Carbon::parse($payment->date)->format('d-m-Y') }}</td>
     </tr>
     <tr>
         <td>Akun Pembayaran</td>
@@ -40,18 +112,26 @@
     </tr>
 </table>
 
-<table class="border">
+{{-- JUMLAH DIBAYAR --}}
+<table>
     <tr>
-        <td>Jumlah Dibayar</td>
-        <td class="text-right">
-            <strong>{{ number_format($payment->amount, 2, ',', '.') }}</strong>
-        </td>
+        <th>Jumlah Dibayar</th>
+        <th class="text-right">
+            {{ formatRupiah($payment->amount) }}
+        </th>
     </tr>
 </table>
 
-<p style="margin-top: 30px;">
-    Dicetak pada {{ now()->format('Y-m-d H:i') }}
+<p style="margin-top: 25px;">
+    Dicetak pada {{ now()->format('d-m-Y H:i') }}
 </p>
+
+{{-- TANDA TANGAN --}}
+<div class="signature">
+    <div>Dibayar Oleh,</div>
+    <br><br><br>
+    <div>( {{ auth()->user()->name }} )</div>
+</div>
 
 </body>
 </html>

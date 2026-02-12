@@ -10,6 +10,20 @@
             font-size: 12px;
         }
 
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 90px;
+        }
+
+        .company-info {
+            margin-left: 15px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -31,12 +45,13 @@
         }
 
         .no-border {
-            border: none;
+            border: none !important;
         }
     </style>
 </head>
 
 <body onload="window.print()">
+
     @php
         function formatQty($value)
         {
@@ -51,12 +66,25 @@
         }
     @endphp
 
+    {{-- HEADER WITH LOGO --}}
+    <div class="header">
+        <img src="{{ asset('images/logo-pt.png') }}" class="logo">
 
-    <h3>PEMBELIAN</h3>
+        <div class="company-info">
+            <h3 style="margin:0;">PT PANCA PRIMA BAHARI</h3>
+            <div>Nganjuk, Jawa Timur</div>
+            <div>Telp: 08xxxxxxxxxx</div>
+        </div>
+    </div>
 
+    <hr>
+
+    <h3 style="margin-bottom:5px;">PEMBELIAN</h3>
+
+    {{-- INFO --}}
     <table class="no-border">
         <tr>
-            <td class="no-border">Invoice</td>
+            <td class="no-border" width="120">Invoice</td>
             <td class="no-border">: {{ $purchase->invoice_number }}</td>
         </tr>
         <tr>
@@ -69,6 +97,7 @@
         </tr>
     </table>
 
+    {{-- ITEMS --}}
     <table>
         <thead>
             <tr>
@@ -90,9 +119,10 @@
         </tbody>
     </table>
 
+    {{-- TOTAL --}}
     <table class="no-border" style="margin-top: 10px;">
         <tr>
-            <td class="no-border text-right">Subtotal</td>
+            <td class="no-border text-right" width="80%">Subtotal</td>
             <td class="no-border text-right">{{ formatRupiah($purchase->subtotal) }}</td>
         </tr>
         <tr>
@@ -104,12 +134,32 @@
             <td class="no-border text-right">{{ formatRupiah($purchase->tax) }}</td>
         </tr>
         <tr>
-            <td class="no-border text-right"><strong>Grand Total</strong></td>
+            <td class="no-border text-right">
+                <strong>Grand Total</strong>
+            </td>
             <td class="no-border text-right">
                 <strong>{{ formatRupiah($purchase->grand_total) }}</strong>
             </td>
         </tr>
     </table>
+
+    <br><br>
+
+    {{-- SIGNATURE --}}
+    {{-- <table class="no-border">
+        <tr>
+            <td class="no-border text-center" width="50%">
+                Dibuat Oleh,
+                <br><br><br>
+                _______________________
+            </td>
+            <td class="no-border text-center">
+                Disetujui,
+                <br><br><br>
+                _______________________
+            </td>
+        </tr>
+    </table> --}}
 
 </body>
 
