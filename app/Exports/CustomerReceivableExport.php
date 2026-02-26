@@ -2,12 +2,12 @@
 
 namespace App\Exports;
 
-use App\Models\SupplierPayable;
+use App\Models\CustomerReceivable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Http\Request;
 
-class SupplierPayableExport implements FromCollection, WithHeadings
+class CustomerReceivableExport implements FromCollection, WithHeadings
 {
     protected $request;
 
@@ -18,11 +18,11 @@ class SupplierPayableExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $query = SupplierPayable::with(['supplier', 'purchase'])
+        $query = CustomerReceivable::with(['customer', 'sale'])
             ->where('balance', '>', 0);
 
         if ($this->request->start_date && $this->request->end_date) {
-            $query->whereHas('purchase', function ($q) {
+            $query->whereHas('sale', function ($q) {
                 $q->whereBetween('date', [
                     $this->request->start_date,
                     $this->request->end_date
@@ -30,20 +30,20 @@ class SupplierPayableExport implements FromCollection, WithHeadings
             });
         }
 
-        if ($this->request->supplier_ids && count($this->request->supplier_ids)) {
-            $query->whereIn('supplier_id', $this->request->supplier_ids);
+        if ($this->request->customer_ids && count($this->request->customer_ids)) {
+            $query->whereIn('customer_id', $this->request->customer_ids);
         }
 
         $data = $query->get();
 
-        $rows = $data->map(function ($p) {
+        $rows = $data->map(function ($r) {
             return [
-                $p->supplier->name ?? '-',
-                $p->purchase->invoice_number ?? '-',
-                $p->total,
-                $p->paid,
-                $p->balance,
-                optional($p->purchase)->due_date,
+                $r->customer->name ?? '-',
+                $r->sale->invoice_number ?? '-',
+                $r->total,
+                $r->paid,
+                $r->balance,
+                optional($r->sale)->due_date,
             ];
         });
 
@@ -63,11 +63,11 @@ class SupplierPayableExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Supplier',
+            'Customer',
             'Nomor Invoice',
             'Total Transaksi',
             'Terbayar',
-            'Sisa Hutang',
+            'Sisa Piutang',
             'Jatuh Tempo',
         ];
     }

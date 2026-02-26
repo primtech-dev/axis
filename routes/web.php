@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchasePaymentController;
 use App\Http\Controllers\SupplierPayableReportController;
+use App\Http\Controllers\CustomerReceivableReportController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalePaymentController;
@@ -326,6 +327,22 @@ Route::middleware(['auth'])
         )
             ->name('supplier-payables.index');
     });
+
+Route::prefix('reports')->group(function () {
+
+    Route::get('customer-receivables',
+        [CustomerReceivableReportController::class, 'index']
+    )->name('reports.customer-receivables.index');
+
+    Route::get('customer-receivables/pdf',
+        [CustomerReceivableReportController::class, 'pdf']
+    )->name('reports.customer-receivables.pdf');
+
+    Route::get('customer-receivables/excel',
+        [CustomerReceivableReportController::class, 'excel']
+    )->name('reports.customer-receivables.excel');
+
+});
 
 Route::middleware(['auth'])
     ->prefix('stocks')

@@ -12,16 +12,34 @@ use Illuminate\Http\Request;
 
 class SupplierPayableReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = Supplier::withSum(
-            ['payables as total_hutang' => function ($q) {
-                $q->where('balance', '>', 0);
-            }],
-            'balance'
-        )->get();
+        $suppliers = Supplier::orderBy('name')->get();
 
-        return view('reports.supplier_payables_index', compact('suppliers'));
+        $query = SupplierPayable::with(['supplier', 'purchase'])
+            ->where('balance', '>', 0);
+
+        // Filter tanggal (pakai tanggal transaksi purchase)
+        if ($request->start_date && $request->end_date) {
+            $query->whereHas('purchase', function ($q) use ($request) {
+                $q->whereBetween('date', [
+                    $request->start_date,
+                    $request->end_date
+                ]);
+            });
+        }
+
+        // Filter supplier (multiple)
+        if ($request->supplier_ids && count($request->supplier_ids)) {
+            $query->whereIn('supplier_id', $request->supplier_ids);
+        }
+
+        $payables = $query->latest()->get();
+
+        return view('reports.supplier_payables_index', compact(
+            'payables',
+            'suppliers'
+        ));
     }
 
     public function pdf(Request $request)
@@ -29,22 +47,37 @@ class SupplierPayableReportController extends Controller
         $query = SupplierPayable::with(['supplier', 'purchase'])
             ->where('balance', '>', 0);
 
-        if ($request->supplier_id) {
-            $query->where('supplier_id', $request->supplier_id);
+        // Filter tanggal
+        if ($request->start_date && $request->end_date) {
+            $query->whereHas('purchase', function ($q) use ($request) {
+                $q->whereBetween('date', [
+                    $request->start_date,
+                    $request->end_date
+                ]);
+            });
         }
 
-        $payables = $query->get();
+        // Filter supplier
+        if ($request->supplier_ids && count($request->supplier_ids)) {
+            $query->whereIn('supplier_id', $request->supplier_ids);
+        }
+
+        $payables = $query->latest()->get();
+
+        $grandTotal = $payables->sum('total');
+        $grandPaid = $payables->sum('paid');
+        $grandBalance = $payables->sum('balance');
 
         return Pdf::loadView(
             'reports.supplier_payables_pdf',
-            compact('payables')
+            compact('payables', 'grandTotal', 'grandPaid', 'grandBalance')
         )->download('laporan-hutang-supplier.pdf');
     }
 
-    public function excel()
+    public function excel(Request $request)
     {
         return Excel::download(
-            new SupplierPayableExport,
+            new SupplierPayableExport($request),
             'laporan-hutang-supplier.xlsx'
         );
     }

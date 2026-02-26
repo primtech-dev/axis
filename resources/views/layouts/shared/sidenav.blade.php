@@ -220,7 +220,7 @@
 
 
             {{-- ================= REPORT ================= --}}
-            {{-- <li class="side-nav-title mt-2">Laporan</li>
+            <li class="side-nav-title mt-2">Laporan</li>
 
             @can('reports.view')
                 <li class="side-nav-item">
@@ -229,7 +229,16 @@
                         <span class="menu-text">Hutang Supplier</span>
                     </a>
                 </li>
-            @endcan --}}
+            @endcan
+
+            @can('reports.view')
+                <li class="side-nav-item">
+                    <a href="{{ route('reports.customer-receivables.index') }}" class="side-nav-link">
+                        <span class="menu-icon"><i data-lucide="file-text"></i></span>
+                        <span class="menu-text">Piutang Customer</span>
+                    </a>
+                </li>
+            @endcan
 
             {{-- ================= SYSTEM ================= --}}
             <li class="side-nav-title mt-2">Sistem</li>

@@ -16,17 +16,18 @@ class SupplierPayable extends Model
         'status',
     ];
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
     public function purchase()
     {
-        return $this->reference_type === 'PURCHASE'
-            ? $this->belongsTo(Purchase::class, 'reference_id')
-            : null;
+        return $this->belongsTo(Purchase::class, 'reference_id');
     }
 
     public function expense()
     {
-        return $this->reference_type === 'EXPENSE'
-            ? $this->belongsTo(Expense::class, 'reference_id')
-            : null;
+        return $this->belongsTo(Expense::class, 'reference_id');
     }
 }
